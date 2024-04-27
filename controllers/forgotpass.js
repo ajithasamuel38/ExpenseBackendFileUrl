@@ -5,10 +5,6 @@ require('dotenv').config();
 const client =Sib.ApiClient.instance;
 var apiKey = client.authentications['api-key'];
 apiKey.apiKey = process.env.API_KEY;
-
-
-
-
 const User = require('../models/user');
 const Forgotpassword = require('../models/forgotpass');
 
@@ -23,6 +19,7 @@ const forgotpassword = async (req, res) => {
                     throw new Error(err)
                 })
                 const tranEmailApi = new Sib.TransactionalEmailsApi();
+                console.log(tranEmailApi);
                 const sender ={
                     email:"ajithasamuel38@gmail.com"
 
@@ -31,18 +28,18 @@ const forgotpassword = async (req, res) => {
                     {
                         email: email
                     }
+                
                 ]
-
+                    
+                console.log(sender, receivers);
+                console.log(apiKey);
                 tranEmailApi.sendTransacEmail({
                     sender,
                     to: receivers,
                     subject: 'Sending with SendGrid is Fun',
                     textContent: 'and easy to do anywhere, even with Node.js',
                     htmlContent: `<a href="http://localhost:3000/resetpassword/${id}">Reset password</a>`
-                }).then((response) => {
-
-                // console.log(response[0].statusCode)
-                // console.log(response[0].headers)
+                }).then((response) => { 
                 return res.status(202).json({message: 'Link to reset password sent to your mail ', sucess: true})
 
             })

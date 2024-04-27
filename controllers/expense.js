@@ -57,16 +57,43 @@ exports.postexpense = async(req, res, next) =>{
         res.status(500).json({ message: "Internal server error" });
     }
 }
+const EXPENSES_PER_PAGE = 10;
 
-exports.getexpense = async(req, res, next) =>{
-    console.log(req.body)
-    try{
-        const response = await Expense.findAll({where : { signupId: req.user.id}});
-        res.status(200).json(response);
-    }catch (err) {
+exports.getexpense = async (req, res, next) => {
+    console.log(req.body);
+    try {
+        const page = +req.query.page || 1;
+        const offset = (page - 1) * EXPENSES_PER_PAGE;
+
+        // Get total count of expenses
+        const totalCount = await Expense.count();
+
+        // Fetch expenses for the current page
+        const expenses = await Expense.findAll({
+            offset: offset,
+            limit: EXPENSES_PER_PAGE
+        });
+
+        console.log(expenses);
+
+        // Calculate pagination info
+        const totalPages = Math.ceil(totalCount / EXPENSES_PER_PAGE);
+        const hasNextPage = page < totalPages;
+        const hasPreviousPage = page > 1;
+
+        // Send response
+        res.json({
+            expenses: expenses,
+            totalExpenses: totalCount,
+            currentPage: page,
+            totalPages: totalPages,
+            hasNextPage: hasNextPage,
+            hasPreviousPage: hasPreviousPage
+        });
+    } catch (err) {
         console.error(err);
         res.status(500).json({ message: "Internal server error" });
-     }
+    }
 }
 
 exports.deleteexpense = async(req, res, next) =>{
