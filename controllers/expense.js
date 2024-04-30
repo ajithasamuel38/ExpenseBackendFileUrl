@@ -57,13 +57,17 @@ exports.postexpense = async(req, res, next) =>{
         res.status(500).json({ message: "Internal server error" });
     }
 }
-const EXPENSES_PER_PAGE = 10;
+
+
 
 exports.getexpense = async (req, res, next) => {
-    console.log(req.body);
+    console.log(req.query);
     try {
         const page = +req.query.page || 1;
-        const offset = (page - 1) * EXPENSES_PER_PAGE;
+        const expensesPerPage = +req.query.limit || 5;
+        const offset = (page - 1) * expensesPerPage;
+
+        console.log(offset, expensesPerPage, page)
 
         // Get total count of expenses
         const totalCount = await Expense.count();
@@ -71,13 +75,13 @@ exports.getexpense = async (req, res, next) => {
         // Fetch expenses for the current page
         const expenses = await Expense.findAll({
             offset: offset,
-            limit: EXPENSES_PER_PAGE
+            limit: expensesPerPage
         });
 
         console.log(expenses);
 
         // Calculate pagination info
-        const totalPages = Math.ceil(totalCount / EXPENSES_PER_PAGE);
+        const totalPages = Math.ceil(totalCount / expensesPerPage);
         const hasNextPage = page < totalPages;
         const hasPreviousPage = page > 1;
 
@@ -94,7 +98,7 @@ exports.getexpense = async (req, res, next) => {
         console.error(err);
         res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
 exports.deleteexpense = async(req, res, next) =>{
     const t = await sequelize.transaction();
