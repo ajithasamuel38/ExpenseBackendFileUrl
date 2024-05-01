@@ -61,7 +61,7 @@ exports.postexpense = async(req, res, next) =>{
 
 
 exports.getexpense = async (req, res, next) => {
-    console.log(req.query);
+    console.log(req.user);
     try {
         const page = +req.query.page || 1;
         const expensesPerPage = +req.query.limit || 5;
@@ -70,18 +70,22 @@ exports.getexpense = async (req, res, next) => {
         console.log(offset, expensesPerPage, page)
 
         // Get total count of expenses
-        const totalCount = await Expense.count();
+        const totalCount = await Expense.count( {where: { signupId: req.user.id }});
+        console.log(totalCount);
 
         // Fetch expenses for the current page
         const expenses = await Expense.findAll({
+            where: { signupId: req.user.id },
             offset: offset,
             limit: expensesPerPage
+
         });
 
         console.log(expenses);
 
         // Calculate pagination info
         const totalPages = Math.ceil(totalCount / expensesPerPage);
+        console.log(totalPages);
         const hasNextPage = page < totalPages;
         const hasPreviousPage = page > 1;
 
@@ -92,7 +96,9 @@ exports.getexpense = async (req, res, next) => {
             currentPage: page,
             totalPages: totalPages,
             hasNextPage: hasNextPage,
-            hasPreviousPage: hasPreviousPage
+            hasPreviousPage: hasPreviousPage,
+            page: page
+            
         });
     } catch (err) {
         console.error(err);

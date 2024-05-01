@@ -8,7 +8,7 @@ const router = express.Router();
 
  router.post('/expense/expensetable', userauthentication.authenticate, expenseController.postexpense);
 
- router.get('/expense/expensetable/expense', expenseController.getexpense);
+ router.get('/expense/expensetable/expense', userauthentication.authenticate, expenseController.getexpense);
 
 router.get('/download', userauthentication.authenticate, expenseController.download);
 

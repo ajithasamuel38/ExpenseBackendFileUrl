@@ -6,7 +6,11 @@
         "PORT": "3000",
         "BUCKET_NAME": "expenseapptracking",
         "IAMUSER_KEY": "AKIA3LKZSNOIEKZWYLQ6",
-        "SECRET_KEY": "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"
+        "SECRET_KEY": "89pxjZm/O0Pr29bqPdhilAUJcDfoXEOrBGsH4l4x",
+        "DB_NAME": "expense",
+        "DB_USERNAME": "root",
+        "DB_PASSWORD": "12345",
+        "DB_HOST": "localhost"
 
 
     }
