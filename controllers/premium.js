@@ -4,8 +4,8 @@ const Order = require('../models/orders');
 exports.purchase = async(req, res) =>{
     try{
         var rzp = new Razorpay({
-            key_id: "rzp_test_TMrpCYzH3M4gri",
-            key_secret: "TrIVBrHRXvwYB9iztuIMwnC9"
+            key_id: process.env.KEY_ID,
+            key_secret: process.env.KEY_SECRET
         })
         const amount =2500;
         rzp.orders.create({amount, currency: "INR"}, (err, order) =>{

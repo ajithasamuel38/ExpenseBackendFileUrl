@@ -1,5 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const helmet = require('helmet');
+const path =require('path');
+const fs = require('fs');
+const morgan = require('morgan');
 
 const sequelize = require("./config/db"); 
 
@@ -20,10 +24,14 @@ const FileUrl = require('./models/FileUrl');
 const cors = require('cors'); 
 
 const app = express();
-
+app.use(helmet());
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'});
+app.use(morgan('combined', {stream: accessLogStream}));
 app.use(bodyParser.json());
 
 app.use(cors());
+
+
 
 app.use(adminroutes);
 app.use(expenseroutes);
@@ -47,7 +55,7 @@ FileUrl.belongsTo(User);
 sequelize.sync()
 .then((result)=>{
     console.log(result);
-    app.listen(3000);
+    app.listen(process.env.PORT);
 }).catch((err)=>{
     console.log(err)
 });

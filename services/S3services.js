@@ -1,8 +1,8 @@
 const AWS = require('aws-sdk');
 exports.S3services = async(data, filename) =>{
-    const BUCKET_NAME= 'expenseapptracking';
-    const IAM_USER_KEY='AKIA3LKZSNOIEKZWYLQ6';
-    const IAM_USER_SECRET = '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';
+    const BUCKET_NAME= process.env.BUCKET_NAME;
+    const IAM_USER_KEY= process.env.IAMUSER_KEY;
+    const IAM_USER_SECRET = process.env.SECRET_KEY;
     let s3bucket = new AWS.S3({
         accessKeyId: IAM_USER_KEY,
         secretAccessKey: IAM_USER_SECRET,
