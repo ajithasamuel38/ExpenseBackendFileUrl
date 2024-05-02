@@ -26,7 +26,7 @@ const FileUrl = require('./models/FileUrl');
 const cors = require('cors'); 
 
 const app = express();
-//app.use(helmet());
+app.use(helmet());
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'});
 app.use(morgan('combined', {stream: accessLogStream}));
