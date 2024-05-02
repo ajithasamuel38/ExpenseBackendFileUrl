@@ -54,7 +54,7 @@ exports.postexpense = async(req, res, next) =>{
     } catch (err) {
         await t.rollback();
         console.error(err);
-        res.status(500).json({ message: "Internal server error" });
+        res.status(500).json({ message: "Node thing" });
     }
 }
 
