@@ -4,6 +4,8 @@ const helmet = require('helmet');
 const path =require('path');
 const fs = require('fs');
 const morgan = require('morgan');
+require('dotenv').config();
+
 
 const sequelize = require("./config/db"); 
 

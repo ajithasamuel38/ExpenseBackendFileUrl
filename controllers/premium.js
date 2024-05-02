@@ -1,5 +1,7 @@
 const Razorpay = require('razorpay');
 const Order = require('../models/orders');
+require('dotenv').config();
+
 
 exports.purchase = async(req, res) =>{
     try{
