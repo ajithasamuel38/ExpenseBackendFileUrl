@@ -26,13 +26,13 @@ const FileUrl = require('./models/FileUrl');
 const cors = require('cors'); 
 
 const app = express();
-//app.use(helmet());
+app.use(helmet());
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'});
 app.use(morgan('combined', {stream: accessLogStream}));
 app.use(bodyParser.json());
 
-app.use(cors( {origin: 'http://51.20.40.164:3000'}));
+app.use(cors( {origin: 'http://51.20.40.164'}));
 
 
 app.use(express.static(path.join(__dirname, 'public')));
