@@ -6,7 +6,7 @@ const userauthentication = require('../middleware/auth');
 
 const router = express.Router();
 
- router.get('/purchase/premium', userauthentication.authenticate, purchaseController.purchase);
+ router.get('/premium', userauthentication.authenticate, purchaseController.purchase);
 
  router.post('/update-premium-status', userauthentication.authenticate, purchaseController.updateTransactionstatus);
 
