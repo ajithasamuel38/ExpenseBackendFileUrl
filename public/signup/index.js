@@ -1,4 +1,4 @@
-const link = "http://51.20.40.164:3000/user/signup";
+const link = "http://localhost:3000/user/signup";
 const form = document.getElementById('signup');
 form.addEventListener('submit', postuserdetails);
 const errormessage = document.getElementById('error-message');
