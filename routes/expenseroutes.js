@@ -6,14 +6,14 @@ const userauthentication = require('../middleware/auth');
 
 const router = express.Router();
 
- router.post('/expense/expensetable', userauthentication.authenticate, expenseController.postexpense);
+ router.post('/expensetable', userauthentication.authenticate, expenseController.postexpense);
 
- router.get('/expense/expensetable/expense', userauthentication.authenticate, expenseController.getexpense);
+ router.get('/expensetable/expense', userauthentication.authenticate, expenseController.getexpense);
 
 router.get('/download', userauthentication.authenticate, expenseController.download);
 
 router.get('/download/fileUrl', userauthentication.authenticate, expenseController.fileUrl);
 
- router.delete('/expense/expensetable/:id', userauthentication.authenticate, expenseController.deleteexpense)
+ router.delete('/expensetable/:id', userauthentication.authenticate, expenseController.deleteexpense)
 
  module.exports = router;
